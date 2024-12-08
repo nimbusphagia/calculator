@@ -11,6 +11,12 @@ function multiply(a,b){
 function divide(a,b){
     return a / b;
 }
+function power(a,b){
+    return Math.pow(a, b);
+}
+function root(a,b){
+    return Math.pow(a, 1/b);
+}
 //CALCULATOR FUNCTIONS
 function operate(num1, op, num2){
     let a = +num1;
@@ -38,6 +44,12 @@ function operate(num1, op, num2){
         case "÷":
             result = divide(a, b);
             break;
+        case "n^":
+            result = power(a, b)
+            break;
+        case "√n":
+            result = root(a, b)
+            break;  
     }
     return result;
 }
