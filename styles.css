@@ -25,6 +25,7 @@ body{
     justify-content: space-evenly;
     padding-top: 10px;
     letter-spacing: 1px;
+    overflow:auto;
 }
 #input{
     justify-self: center;

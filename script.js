@@ -17,7 +17,7 @@ function power(a,b){
 function root(a,b){
     return Math.pow(a, 1/b);
 }
-//CALCULATOR FUNCTIONS
+//CALCULATOR OPERATE FUNCTION
 function operate(num1, op, num2){
     let a = +num1;
     let b = +num2;
@@ -42,7 +42,7 @@ function operate(num1, op, num2){
             result = divide(a, b);
             break;
         case "÷":
-            if (a === 0 || b === 0){
+            if (b === 0){
                 result = "( ｡ •̀ ᴖ •́ ｡)";
             } else {
                 result = divide(a, b);
@@ -65,49 +65,24 @@ function operate(num1, op, num2){
 }
 //INPUT AND OUTPUT FUNCTION
 const btnAll = Array.from(document.querySelectorAll(".button"));
-let inputScreen = document.querySelector("#input");
-let tempContent = "";
+const btnOperators = Array.from(document.querySelectorAll(".operator"));
+const outputScreen = document.querySelector("#output");
+const inputScreen = document.querySelector("#input");
+let input = "";
 
-function getInput(event){
-    let input = event.target.textContent;
+function displayInput(event){
+    input = event.target.textContent;
     inputScreen.textContent += input.replace("=", "").replace("n", "").replace("AC", "").replace("⌫", "");
 }
-function getTempContent(event){
-    const tempInput = event.target.textContent;
-    tempContent += tempInput;
+function getTemp(event){
+    temp += event.target.textContent.replace("n", "").replace("AC", "").replace("⌫", "");;
 }
 
 for(let i = 0; i < btnAll.length; i++){
-    btnAll[i].addEventListener("click", getInput);
-    btnAll[i].addEventListener("click", getTempContent);
+    btnAll[i].addEventListener("click", displayInput);
+    btnAll[i].addEventListener("click", getTemp);
 }
 
-const btnOperators = Array.from(document.querySelectorAll(".operator"));
-
-let operator;
-let operand1;
-let operand2;
-
-for(let i = 0; i < btnOperators.length; i++){
-    btnOperators[i].addEventListener("click", getOperands);
-}
-function getOperands(event){
-    operator = event.target.textContent;
-    operand1 = tempContent.replace(operator,"");
-    tempContent = "";
-}
-
-const btnMath = document.querySelector(".result");
-const outputScreen = document.querySelector("#output");
-
-btnMath.addEventListener("click", getMath); 
-
-function getMath(){
-    operand2 = tempContent.replace("=","");
-    tempContent = "";
-    outputScreen.textContent = operate(operand1, operator, operand2);
-    tempContent = operate(operand1, operator, operand2);
-}
 //BACKSPACE AND CLEAR ALL
 const btnAC = document.querySelector(".clearAll");
 const btnBacktrack = document.querySelector(".delete");
@@ -117,7 +92,7 @@ let newDisplay;
 
 function clearAll(){
     inputScreen.textContent = "";
-    tempContent = "";
+    temp = "";
     operand1 = "";
     operand2 = "";
     operator = "";
@@ -127,9 +102,62 @@ function backtrack(){
     lastChar = (inputScreen.textContent.length) - 1;
     newDisplay = inputScreen.textContent.substring(0, lastChar);
     inputScreen.textContent = newDisplay;
+    if(num2){
+    lastChar = (num2.length) - 1;
+    newDisplay = num2.substring(0, lastChar);
+    num2 = newDisplay;
+    } else if (temp){
+    lastChar = (temp.length) - 1;
+    newDisplay = temp.substring(0, lastChar);
+    temp = newDisplay;
+    }
 }
 
 btnAC.addEventListener("click", clearAll);
 btnBacktrack.addEventListener("click", backtrack);
+
+//NEW APPROACH
+const btnContainer = document.querySelector("#btnContainer");
+
+
+let num1 = "";
+let operator = "";
+let num2 = "";
+let result = "";
+let temp = "";
+
+function calculate (event){
+    //!operator ? startMath() : continueMath();
+    if (!operator){
+        operator = event.target.textContent;
+        num1 = temp.replace(operator, "");
+        temp = "";
+    }else if (event.target.textContent === "="){
+            num2 = temp.replace(event.target.textContent, "");
+            result = operate(num1, operator, num2);
+            operator = "";
+            num1 = result;
+            num2 = "";
+            temp = result;
+            outputScreen.textContent = result;
+        } else {
+            num2 = temp.replace(event.target.textContent, "");
+            result = operate(num1, operator, num2);
+            operator = event.target.textContent;
+            num1 = result;
+            num2 = "";
+            temp = "";
+            outputScreen.textContent = result;
+        }
+}
+
+btnContainer.addEventListener("click", ()=>{
+    for(let i = 0; i < btnOperators.length; i++){
+            btnOperators[i].addEventListener("click", calculate);
+    }
+})
+
+
+
 
 
