@@ -42,26 +42,35 @@ function operate(num1, op, num2){
             result = divide(a, b);
             break;
         case "÷":
-            result = divide(a, b);
+            if (a === 0 || b === 0){
+                result = "( ｡ •̀ ᴖ •́ ｡)";
+            } else {
+                result = divide(a, b);
+            }
             break;
         case "n^":
-            result = power(a, b)
+            result = power(a, b);
             break;
+        case "^":
+            result = power(a, b);
+            break; 
         case "√n":
-            result = root(a, b)
-            break;  
+            result = root(a, b);
+            break;
+        case "√":
+            result = root(a, b);
+            break;    
     }
     return result;
 }
-//INPUT FUNCTION
+//INPUT AND OUTPUT FUNCTION
 const btnAll = Array.from(document.querySelectorAll(".button"));
 let inputScreen = document.querySelector("#input");
-let inputContent = "";
 let tempContent = "";
 
 function getInput(event){
-    const input = event.target.textContent;
-    inputScreen.textContent += input.replace("=", "");
+    let input = event.target.textContent;
+    inputScreen.textContent += input.replace("=", "").replace("n", "").replace("AC", "").replace("⌫", "");
 }
 function getTempContent(event){
     const tempInput = event.target.textContent;
@@ -99,4 +108,28 @@ function getMath(){
     outputScreen.textContent = operate(operand1, operator, operand2);
     tempContent = operate(operand1, operator, operand2);
 }
-console.log();
+//BACKSPACE AND CLEAR ALL
+const btnAC = document.querySelector(".clearAll");
+const btnBacktrack = document.querySelector(".delete");
+let lastChar;
+let newDisplay;
+ 
+
+function clearAll(){
+    inputScreen.textContent = "";
+    tempContent = "";
+    operand1 = "";
+    operand2 = "";
+    operator = "";
+    outputScreen.textContent = "output";
+}
+function backtrack(){
+    lastChar = (inputScreen.textContent.length) - 1;
+    newDisplay = inputScreen.textContent.substring(0, lastChar);
+    inputScreen.textContent = newDisplay;
+}
+
+btnAC.addEventListener("click", clearAll);
+btnBacktrack.addEventListener("click", backtrack);
+
+

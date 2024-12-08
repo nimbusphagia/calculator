@@ -24,6 +24,7 @@ body{
     flex-direction: column;
     justify-content: space-evenly;
     padding-top: 10px;
+    letter-spacing: 1px;
 }
 #input{
     justify-self: center;
@@ -35,6 +36,7 @@ body{
     justify-self: flex-end;
     text-align: end;
     padding-right: 15px;
+    font-size: 24px;
 }
 #btnContainer{
     padding-top:10px;
@@ -43,7 +45,7 @@ body{
     gap: 9px;
 }
 .button{
-    border: 1.5px solid black;
+    border: 1.6px solid black;
     border-radius: 5px;
     height : 45px;
     width: 45px;
