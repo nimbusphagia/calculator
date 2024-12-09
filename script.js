@@ -129,7 +129,7 @@ function backtrack(){
 btnAC.addEventListener("click", clearAll);
 btnBacktrack.addEventListener("click", backtrack);
 
-//NEW APPROACH
+//CALCULATE ALL
 const btnContainer = document.querySelector("#btnContainer");
 let num1 = "";
 let operator = "";
@@ -140,7 +140,6 @@ let deleted = "";
 let proof = "";
 
 function calculate (event){
-    //!operator ? startMath() : continueMath();
     if (inputScreen.textContent === "..."){
         temp = "";
         inputScreen.textContent = "...";
@@ -177,6 +176,29 @@ btnContainer.addEventListener("click", ()=>{
             btnOperators[i].addEventListener("click", calculate);
     }
 })
+
+//KEYBOARD SUPPORT
+/*const mainBody = document.querySelector("#calcContainer");
+const inputKey = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
+const operatorsKey = ["+","-","/","*","^"];
+const clearKey = [""];
+const exception = ["="]
+let key = "";
+
+mainBody.addEventListener("keydown",(event)=>{
+   let key = event.key;
+   console.log(key);
+if (inputKey.includes(key)){
+    mainBody.addEventListener("keydown", displayInput);
+    mainBody.addEventListener("keydown", getTemp);
+    console.log(event.key);
+}else if (operatorsKey.includes(key)){
+    mainBody.addEventListener("keydown", displayInput);
+    mainBody.addEventListener("keydown", calculate);
+} else if (exception.includes(key)){
+    mainBody.addEventListener("keydown", calculate);
+}   
+});*/
 
 
 
